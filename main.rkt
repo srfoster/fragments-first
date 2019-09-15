@@ -4,7 +4,8 @@
            (all-from-out racket)
            #%module-begin)
          (rename-out 
-           [my-begin #%module-begin]))
+           [my-begin #%module-begin])
+         tester-cube  )
 
 (require syntax/parse/define
          "./lang/main.rkt"
@@ -25,8 +26,25 @@
      #`(#%module-begin
         all ...)]))
 
+;TODO: Remove boilerplate above
+
+;Leave only...
 (define (world . things)
   ;Hard code things players cannot change
-  (displayln things))
+  (apply serve 
+    (append 
+     (list
+      (fpc 0 10 0)
+      (tester-cube 0 0 0))
+      things))
 
 
+  (launch)
+  
+  ;Ummm... Yeah no...
+  ;  * Also, auto pull from master (or current branch...)?
+  (sleep 100000000))
+
+(define (tester-cube x y z)
+  (entity TesterCube
+          (SetPosition To x y z)))
